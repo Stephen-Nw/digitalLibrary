@@ -12,8 +12,13 @@ def home():
 
 
 @app.route('/login')
-def login():
+def login_user():
     return render_template('login.html')
+
+
+@app.route('/register')
+def register_user():
+    return render_template('register.html')
 
 
 
