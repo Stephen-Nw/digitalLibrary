@@ -3,12 +3,13 @@ from flask_bootstrap import Bootstrap
 
 
 app = Flask(__name__)
-
 Bootstrap(app)
+
 
 @app.route('/')
 def home():
     return render_template('index.html')
+
 
 @app.route('/login')
 def login():
