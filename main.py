@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 
 
@@ -22,6 +22,7 @@ def register_user():
 
 @app.route('/book')
 def find_book():
+    data = request.form
     return render_template('index.html')
 
 
