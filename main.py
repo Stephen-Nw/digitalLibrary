@@ -20,10 +20,16 @@ def login_user():
 def register_user():
     return render_template('register.html')
 
-@app.route('/book')
+
+@app.route('/book', methods=["POST", "GET"])
 def find_book():
     data = request.form
-    return render_template('index.html')
+    if request.method == "POST":
+        book_title = data['book_needed']
+        print(book_title)
+        return render_template('login.html')
+    else:
+        return render_template('index.html')
 
 
 
