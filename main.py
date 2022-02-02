@@ -27,7 +27,7 @@ def find_book():
     if request.method == "POST":
         book_title = data['book_needed']
         print(book_title)
-        return render_template('login.html')
+        return render_template('search.html')
     else:
         return render_template('index.html')
 
