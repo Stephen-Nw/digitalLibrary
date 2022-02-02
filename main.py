@@ -8,7 +8,7 @@ Bootstrap(app)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('base.html')
 
 
 @app.route('/login')
@@ -20,6 +20,9 @@ def login_user():
 def register_user():
     return render_template('register.html')
 
+@app.route('/book')
+def find_book():
+    return render_template('index.html')
 
 
 
