@@ -8,7 +8,7 @@ Bootstrap(app)
 
 @app.route('/')
 def home():
-    return render_template('reading_base.html')
+    return render_template('in_progress.html')
 
 
 @app.route('/login')
