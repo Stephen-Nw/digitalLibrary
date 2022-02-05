@@ -13,24 +13,16 @@
 {% endblock %}
 
 {% block card %}
-<!--<div class="row mb-5">-->
-<!--    <h1 class="heading">Select Book</h1>-->
     {% for book in books %}
     <div class="card h-100">
-        <!-- Product image-->
         <img class="card-img-top" src="{{ book['volumeInfo']['imageLinks']['smallThumbnail'] }}" alt="..."/>
-        <!-- Product details-->
         <div class="card-body p-1">
             <div class="text-center">
-                <!-- Product name-->
                 <h5 class="fw-bolder">{{ book['volumeInfo']['title'] }}</h5>
-                <!-- Product price-->
                 {{ book['volumeInfo']['authors'] }}<br>
                 {{ book['volumeInfo']['publishedDate'] }}
             </div>
-        </div>
-        <!-- Product actions-->
-        <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
+        </div>        <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Reading in Progress</a></div>
         </div>
 
@@ -43,5 +35,4 @@
         </div>
     </div>
     {% endfor %}
-<!--</div>-->
 {% endblock %}
