@@ -13,5 +13,13 @@
 {% endblock %}
 
 {% block card %}
-<h2>Placeholder</h2>
+<div class="container">
+    <h1 class="heading">Select Book</h1>
+  {% for book in books %}
+  <p>
+    {{ book['volumeInfo']['title'] }} - {{ book['volumeInfo']['authors'] }} - {{ book['volumeInfo']['publishedDate'] }}
+  </p>
+  {% endfor %}
+
+</div>
 {% endblock %}
