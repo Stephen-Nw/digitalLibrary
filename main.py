@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
+import requests
 
 
 app = Flask(__name__)
@@ -8,7 +9,7 @@ Bootstrap(app)
 
 @app.route('/')
 def home():
-    return render_template('in_progress.html')
+    return render_template('search.html')
 
 
 @app.route('/login')
@@ -27,7 +28,18 @@ def find_book():
     if request.method == "POST":
         book_title = data['book_needed']
         print(book_title)
-        return render_template('search.html')
+
+        parameters = {
+            "q": "To kill a mockingbird",
+
+        }
+
+        response = requests.get("https://www.googleapis.com/books/v1/volumes", params=parameters)
+        response.raise_for_status()
+        book_data = response.json()
+        book_list = book_data['items']['volumeInfo']
+
+        return render_template('search.html', books=book_list)
     else:
         return render_template('index.html')
 
