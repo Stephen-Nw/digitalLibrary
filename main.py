@@ -10,6 +10,7 @@ Bootstrap(app)
 @app.route('/')
 def home():
     return render_template('read_in_progress.html')
+    # return render_template('index.html')
 
 
 @app.route('/login')
