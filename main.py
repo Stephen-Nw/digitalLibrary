@@ -9,7 +9,7 @@ Bootstrap(app)
 
 @app.route('/')
 def home():
-    return render_template('read_in_progress.html')
+    return render_template('read_later.html')
     # return render_template('index.html')
 
 
@@ -43,6 +43,28 @@ def find_book():
         return render_template('search.html', books=book_list)
     else:
         return render_template('index.html')
+
+
+@app.route('/reading')
+def in_progress():
+    """Retrieves books currently being read by user"""
+    return render_template('read_in_progress.html')
+
+
+@app.route('/complete')
+def completed_reading():
+    """Retrieves books that have been read by user"""
+    return render_template('read_complete.html')
+
+
+@app.route('/future')
+def later_reading():
+    """Retrieves books to be read later by user"""
+    return render_template('read_later.html')
+
+
+
+
 
 
 
