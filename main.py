@@ -9,13 +9,18 @@ Bootstrap(app)
 
 @app.route('/')
 def home():
-    return render_template('read_later.html')
+    return render_template('search.html')
     # return render_template('index.html')
 
 
 @app.route('/login')
 def login_user():
     return render_template('login.html')
+
+
+@app.route('/logout')
+def logout_user():
+    return render_template('index.html')
 
 
 @app.route('/register')
