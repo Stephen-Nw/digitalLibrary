@@ -52,7 +52,7 @@
 
 
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ url_for('in_progress') }}">
                 <span>Current reads</span></a>
         </li>
 
@@ -60,14 +60,14 @@
         <hr class="sidebar-divider">
 
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ url_for('later_reading') }}">
                 <span>Future reads</span></a>
         </li>
 
         <hr class="sidebar-divider">
 
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ url_for('completed_reading') }}">
                 <span>Completed reads</span></a>
         </li>
 
