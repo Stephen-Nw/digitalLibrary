@@ -1,15 +1,34 @@
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 import requests
 
 
 app = Flask(__name__)
-Bootstrap(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///books-tracker.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+# Bootstrap(app)
+
+
+# CREATE DATABASES
+class User(UserMixin, db.Model):
+    __tablename__ = "users_table"
+    id = db.Column(db.Integer, primary_key=True)
+    first = db.Column(db.String(250))
+    last = db.Column(db.String(250))
+    email = db.Column(db.String(250))
+    password = db.Column(db.String(250))
+
+
+db.create_all()
+
 
 
 @app.route('/')
 def home():
-    return render_template('search.html')
+    return render_template('read_later.html')
     # return render_template('index.html')
 
 
