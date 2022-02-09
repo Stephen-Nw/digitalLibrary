@@ -3,7 +3,7 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from forms import LoginForm, RegisterForm
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 import requests
 import os
 
@@ -62,10 +62,13 @@ def register_user():
     form = RegisterForm()
     if form.validate_on_submit():
         new_user = User()
+        if form.password.data == form.repeatPassword.data:
+            new_user.password = generate_password_hash(form.password.data, rounds=12)
+        else:
+            print("Passwords do not match!!")
         new_user.first = form.firstName.data
         new_user.last = form.lastName.data
         new_user.email = form.email.data
-        new_user.password = form.password.data
 
         db.session.add(new_user)
         db.session.commit()
