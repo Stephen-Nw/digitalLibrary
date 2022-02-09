@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -62,6 +62,11 @@ def register_user():
         new_user.last = form.lastName.data
         new_user.email = form.email.data
         new_user.password = form.password.data
+
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('read_in_progress.html'))
+
     return render_template('register.html')
 
 
