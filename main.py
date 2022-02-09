@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from forms import LoginForm, RegisterForm
 import requests
 
 
@@ -21,6 +22,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(250))
     password = db.Column(db.String(250))
 
+
 class Book(db.Model):
     __tablename__ = "books_table"
     id = db.Column(db.Integer, primary_key=True)
@@ -33,7 +35,6 @@ class Book(db.Model):
 
 
 db.create_all()
-
 
 
 @app.route('/')
@@ -54,6 +55,13 @@ def logout_user():
 
 @app.route('/register')
 def register_user():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        new_user = User()
+        new_user.first = form.firstName.data
+        new_user.last = form.lastName.data
+        new_user.email = form.email.data
+        new_user.password = form.password.data
     return render_template('register.html')
 
 
