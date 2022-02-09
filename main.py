@@ -39,8 +39,8 @@ db.create_all()
 
 @app.route('/')
 def home():
-    return render_template('read_later.html')
-    # return render_template('index.html')
+    # return render_template('read_later.html')
+    return render_template('index.html')
 
 
 @app.route('/login')
