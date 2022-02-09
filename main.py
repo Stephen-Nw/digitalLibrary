@@ -69,7 +69,7 @@ def register_user():
 
         db.session.add(new_user)
         db.session.commit()
-        return redirect(url_for('read_in_progress.html'))
+        return redirect(url_for('in_progress'))
 
     return render_template('register.html', form=form)
 
