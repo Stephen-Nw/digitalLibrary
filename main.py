@@ -3,6 +3,7 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from forms import LoginForm, RegisterForm
+from flask_bcrypt import Bcrypt
 import requests
 import os
 
@@ -10,11 +11,11 @@ import os
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ['SecretKey']
 Bootstrap(app)
+bcrypt = Bcrypt(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///books-tracker.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
 
 
 # CREATE DATABASES
@@ -43,7 +44,6 @@ db.create_all()
 
 @app.route('/')
 def home():
-    # return render_template('read_later.html')
     return render_template('index.html')
 
 
