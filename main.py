@@ -23,7 +23,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first = db.Column(db.String(250))
     last = db.Column(db.String(250))
-    email = db.Column(db.String(250))
+    email = db.Column(db.String(250), unique=True)
     password = db.Column(db.String(250))
 
 
