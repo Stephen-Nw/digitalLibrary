@@ -66,6 +66,7 @@ def register_user():
             new_user.password = generate_password_hash(form.password.data, rounds=12)
         else:
             print("Passwords do not match!!")
+            return render_template('register.html', form=form)
         new_user.first = form.firstName.data
         new_user.last = form.lastName.data
         new_user.email = form.email.data
