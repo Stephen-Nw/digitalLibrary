@@ -8,11 +8,13 @@ import os
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///books-tracker.db"
 app.config['SECRET_KEY'] = os.environ['SecretKey']
+Bootstrap(app)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///books-tracker.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-# Bootstrap(app)
+
 
 
 # CREATE DATABASES
@@ -55,7 +57,7 @@ def logout_user():
     return render_template('index.html')
 
 
-@app.route('/register')
+@app.route('/register', methods=["POST", "GET"])
 def register_user():
     form = RegisterForm()
     if form.validate_on_submit():
@@ -69,7 +71,7 @@ def register_user():
         db.session.commit()
         return redirect(url_for('read_in_progress.html'))
 
-    return render_template('register.html')
+    return render_template('register.html', form=form)
 
 
 @app.route('/book', methods=["POST", "GET"])
