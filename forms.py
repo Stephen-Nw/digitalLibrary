@@ -11,3 +11,8 @@ class RegisterForm(FlaskForm):
     repeatPassword = PasswordField(label=' Re-enter Password', validators=[DataRequired()])
     submit = SubmitField(label='Register')
 
+
+class LoginForm(FlaskForm):
+    email = StringField(label="Email", validators=[DataRequired(), Email()])
+    password = PasswordField(label="Password", validators=[DataRequired()])
+    submit = SubmitField(label="Let Me In")
