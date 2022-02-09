@@ -21,6 +21,16 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(250))
     password = db.Column(db.String(250))
 
+class Book(db.Model):
+    __tablename__ = "books_table"
+    id = db.Column(db.Integer, primary_key=True)
+    book_id = db.Column(db.String(250), unique=True, nullable=False)
+    book_title = db.Column(db.String(350), nullable=False)
+    book_author = db.Column(db.String(350), nullable=False)
+    image_url = db.Column(db.String(350))
+    publish_date = db.Column(db.String(250))
+    category = db.Column(db.String(250), nullable=False)
+
 
 db.create_all()
 
