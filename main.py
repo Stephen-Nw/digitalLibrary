@@ -49,7 +49,22 @@ def home():
 
 @app.route('/login')
 def login_user():
-    return render_template('login.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        user = User.query.filter_by(email=email).first()
+
+        if not user:
+            print("User does not exist")
+            return redirect(url_for('login_user'))
+        elif not check_password_hash(user.password, password):
+            print("Wrong password")
+            return redirect(url_for('login_user'))
+        else:
+            print('Success!!!')
+            return redirect(url_for('in_progress'))
+    return render_template('login.html', form=form)
 
 
 @app.route('/logout')
