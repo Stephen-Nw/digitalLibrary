@@ -25,6 +25,18 @@
 
 {% block content %}
 <div class="container">
-{{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+<!--{{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}-->
+    <form class="form form-horizontal" method="post" role="form">
+  {{ form.hidden_tag() }}
+  {{ wtf.form_errors(form, hiddens="only") }}
+
+    <div style="width: 50%">
+  {{ wtf.form_field(form.email) }}
+    </div>
+
+      <div style="width: 25%">
+  {{ wtf.form_field(form.password) }}
+    </div>
+</form>
 </div>
 {% endblock %}
