@@ -19,14 +19,16 @@
 
 
 {% block heading %}
-<h2>Log into Your Account</h2>
-
+<!--<h2>Log into Your Account</h2>-->
+<div>
+<img src="https://images.unsplash.com/photo-1644436664636-a525728cf7ec?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxOXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
+</div>
 {% endblock %}
 
 {% block content %}
 <div class="container">
 <!--{{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}-->
-    <form class="form form-horizontal" method="post" role="form" style="align:center">
+  <form class="form form-horizontal" method="post" role="form" style="align:center">
   {{ form.hidden_tag() }}
   {{ wtf.form_errors(form, hiddens="only") }}
 
