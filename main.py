@@ -77,7 +77,7 @@ def register_user():
     if form.validate_on_submit():
         new_user = User()
         if form.password.data == form.repeatPassword.data:
-            new_user.password = generate_password_hash(form.password.data, rounds=12)
+            new_user.password = generate_password_hash(form.password.data, rounds=12).decode('utf-8')
         else:
             flash("Passwords do not match!!")
             return redirect(url_for('register_user'))
