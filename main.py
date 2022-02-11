@@ -79,7 +79,7 @@ def register_user():
         if form.password.data == form.repeatPassword.data:
             new_user.password = generate_password_hash(form.password.data, rounds=12).decode('utf-8')
         else:
-            flash("Passwords do not match!!")
+            flash("Passwords do not match!!", category='error')
             return redirect(url_for('register_user'))
         new_user.first = form.firstName.data
         new_user.last = form.lastName.data
