@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -138,4 +138,4 @@ def later_reading():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
