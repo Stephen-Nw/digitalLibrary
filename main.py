@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -47,7 +47,7 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=["POST", "GET"])
 def login_user():
     form = LoginForm()
     if form.validate_on_submit():
@@ -56,13 +56,12 @@ def login_user():
         user = User.query.filter_by(email=email).first()
 
         if not user:
-            print("User does not exist")
+            flash("User does not exist", category='error')
             return redirect(url_for('login_user'))
         elif not check_password_hash(user.password, password):
-            print("Wrong password")
+            flash("Wrong password", category='error')
             return redirect(url_for('login_user'))
         else:
-            print('Success!!!')
             return redirect(url_for('in_progress'))
     return render_template('login.html', form=form)
 
@@ -80,8 +79,8 @@ def register_user():
         if form.password.data == form.repeatPassword.data:
             new_user.password = generate_password_hash(form.password.data, rounds=12)
         else:
-            print("Passwords do not match!!")
-            return render_template('register.html', form=form)
+            flash("Passwords do not match!!")
+            return redirect(url_for('register_user'))
         new_user.first = form.firstName.data
         new_user.last = form.lastName.data
         new_user.email = form.email.data
@@ -139,4 +138,4 @@ def later_reading():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
