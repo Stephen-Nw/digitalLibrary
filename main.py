@@ -96,20 +96,26 @@ def register_user():
 def find_book():
     data = request.form
     if request.method == "POST":
-        book_title = data['book_needed']
-        print(book_title)
+        title = data['book_needed']
 
         parameters = {
-            "q": book_title,
-
+            "q": title,
         }
 
-        response = requests.get("https://www.googleapis.com/books/v1/volumes", params=parameters)
-        response.raise_for_status()
-        book_data = response.json()
-        book_list = book_data['items']
-
-        return render_template('search.html', books=book_list)
+        try:
+            requested_book = Book.query.filter_by(book_title=title).first()
+        except AttributeError:
+            try:
+                response = requests.get("https://www.googleapis.com/books/v1/volumes", params=parameters)
+            except KeyError:
+                return render_template("error.html")
+            else:
+                response.raise_for_status()
+                book_data = response.json()
+                book_list = book_data['items']
+                return render_template('search.html', books=book_list)
+        else:
+            return render_template('search.html', books=requested_book)
     else:
         return render_template('index.html')
 
