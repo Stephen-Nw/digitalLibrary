@@ -23,15 +23,15 @@
                 {{ book['volumeInfo']['publishedDate'] }}
             </div>
         </div>        <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Reading in Progress</a></div>
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ url_for('in_progress') }}">Reading in Progress</a></div>
         </div>
 
         <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Reading Completed</a></div>
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ url_for('completed_reading') }}">Reading Completed</a></div>
         </div>
 
         <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">For Later Reading</a></div>
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ url_for('later_reading') }}">For Later Reading</a></div>
         </div>
     </div>
     {% endfor %}

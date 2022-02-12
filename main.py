@@ -113,7 +113,7 @@ def find_book():
         return render_template('index.html')
 
 
-@app.route('/reading')
+@app.route('/reading', methods=["POST", "GET"])
 def in_progress():
     """Retrieves books currently being read by user"""
     return render_template('read_in_progress.html')
