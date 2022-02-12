@@ -98,24 +98,20 @@ def find_book():
     if request.method == "POST":
         title = data['book_needed']
 
+        requested_book = Book.query.filter_by(book_title=title).first()
+        print(requested_book.book_author)
+
         parameters = {
             "q": title,
+
         }
 
-        try:
-            requested_book = Book.query.filter_by(book_title=title).first()
-        except AttributeError:
-            try:
-                response = requests.get("https://www.googleapis.com/books/v1/volumes", params=parameters)
-            except KeyError:
-                return render_template("error.html")
-            else:
-                response.raise_for_status()
-                book_data = response.json()
-                book_list = book_data['items']
-                return render_template('search.html', books=book_list)
-        else:
-            return render_template('search.html', books=requested_book)
+        response = requests.get("https://www.googleapis.com/books/v1/volumes", params=parameters)
+        response.raise_for_status()
+        book_data = response.json()
+        book_list = book_data['items']
+
+        return render_template('search.html', books=book_list)
     else:
         return render_template('index.html')
 
