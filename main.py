@@ -98,9 +98,6 @@ def find_book():
     if request.method == "POST":
         title = data['book_needed']
 
-        requested_book = Book.query.filter_by(book_title=title).first()
-        print(requested_book.book_author)
-
         parameters = {
             "q": title,
 
