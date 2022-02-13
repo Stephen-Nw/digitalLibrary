@@ -122,15 +122,10 @@ def in_progress():
 @app.route('/add_read/<book_id>', methods=["POST", "GET"])
 def add_in_progress(book_id):
     """Add book to database in progress category"""
-    print(book_id)
-    parameters = {
-        "q": book_id,
 
-    }
-    response = requests.get("https://www.googleapis.com/books/v1/volumes", params=parameters)
+    response = requests.get(f"https://www.googleapis.com/books/v1/volumes/{book_id}")
     response.raise_for_status()
     book_data = response.json()
-
 
 
     return render_template('read_in_progress.html')
