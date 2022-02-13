@@ -62,7 +62,7 @@ def login_user():
             flash("Wrong password", category='error')
             return redirect(url_for('login_user'))
         else:
-            return redirect(url_for('in_progress'))
+            return redirect(url_for('completed_reading'))
     return render_template('login.html', form=form)
 
 
@@ -116,6 +116,13 @@ def find_book():
 @app.route('/reading', methods=["POST", "GET"])
 def in_progress():
     """Retrieves books currently being read by user"""
+    return render_template('read_in_progress.html')
+
+
+@app.route('/add_read/<book_id>', methods=["POST", "GET"])
+def add_in_progress(book_id):
+    """Add book to database in progress category"""
+
     return render_template('read_in_progress.html')
 
 
