@@ -116,13 +116,13 @@ def find_book():
 @app.route('/reading', methods=["POST", "GET"])
 def in_progress():
     """Retrieves books currently being read by user"""
-    return render_template('read_in_progress.html')
+    all_books = db.session.query(Book).all()
+    return render_template('read_in_progress.html', books=all_books)
 
 
 @app.route('/add_read/<book_id>', methods=["POST", "GET"])
 def add_in_progress(book_id):
     """Add book to database in progress category"""
-
     response = requests.get(f"https://www.googleapis.com/books/v1/volumes/{book_id}")
     response.raise_for_status()
     book_data = response.json()
