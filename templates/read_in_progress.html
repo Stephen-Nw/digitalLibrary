@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block card %}
+{% for book in books %}
 <div class="col mb-5">
     <div class="card h-100">
         <!-- Product image-->
@@ -32,4 +33,5 @@
         </div>
     </div>
 </div>
+{% endfor %}
 {% endblock %}
