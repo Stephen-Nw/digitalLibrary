@@ -139,7 +139,7 @@ def add_in_progress(book_id):
     new_book.category = "In Progress"
     db.session.add(new_book)
     db.session.commit()
-    return render_template('read_in_progress.html')
+    return redirect(url_for('in_progress'))
 
 
 @app.route('/complete')
