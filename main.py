@@ -123,8 +123,10 @@ def in_progress():
 @app.route('/add_read/<book_id>', methods=["POST", "GET"])
 def add_in_progress(book_id):
     """Add book to database in progress category if not previously added"""
-    book_in_db = Book.query.get(book_id)
+    print(book_id)
+    book_in_db = Book.query.filter_by(book_id=f"{book_id}").first()
     if not book_in_db:
+        print("Book not present")
         response = requests.get(f"https://www.googleapis.com/books/v1/volumes/{book_id}")
         response.raise_for_status()
         book_data = response.json()
@@ -146,6 +148,7 @@ def add_in_progress(book_id):
         print("Update category")
         return redirect(url_for('in_progress'))
     else:
+        print("Book present")
         return redirect(url_for('in_progress'))
 
 
