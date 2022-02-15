@@ -145,7 +145,8 @@ def add_in_progress(book_id):
         db.session.commit()
         return redirect(url_for('in_progress'))
     elif book_in_db.category != "In Progress":
-        print("Update category")
+        book_in_db.category = "In Progress"
+        db.session.commit()
         return redirect(url_for('in_progress'))
     else:
         print("Book present")
