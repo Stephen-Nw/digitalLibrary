@@ -120,13 +120,15 @@ def in_progress():
     return render_template('read_in_progress.html', books=all_books)
 
 
+# This route uses the book id to query the database to see if book has previously been added.
+# If book is database with "In Progress" category, no action is needed
+# If book is in database with any other category, update category to "In Progress"
+# If book is not in database, add book.
 @app.route('/add_read/<book_id>', methods=["POST", "GET"])
 def add_in_progress(book_id):
     """Add book to database in progress category if not previously added"""
-    print(book_id)
     book_in_db = Book.query.filter_by(book_id=f"{book_id}").first()
     if not book_in_db:
-        print("Book not present")
         response = requests.get(f"https://www.googleapis.com/books/v1/volumes/{book_id}")
         response.raise_for_status()
         book_data = response.json()
@@ -149,7 +151,6 @@ def add_in_progress(book_id):
         db.session.commit()
         return redirect(url_for('in_progress'))
     else:
-        print("Book present")
         return redirect(url_for('in_progress'))
 
 
