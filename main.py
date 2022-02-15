@@ -31,7 +31,7 @@ class User(UserMixin, db.Model):
 class Book(db.Model):
     __tablename__ = "books_table"
     id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.String(250), unique=True, nullable=False)
+    book_id = db.Column(db.String(250), nullable=False)
     book_title = db.Column(db.String(350), nullable=False)
     book_author = db.Column(db.String(350), nullable=False)
     image_url = db.Column(db.String(350))
@@ -141,6 +141,9 @@ def add_in_progress(book_id):
         new_book.category = "In Progress"
         db.session.add(new_book)
         db.session.commit()
+        return redirect(url_for('in_progress'))
+    elif book_in_db.category != "In Progress":
+        print("Update category")
         return redirect(url_for('in_progress'))
     else:
         return redirect(url_for('in_progress'))
