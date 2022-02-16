@@ -165,6 +165,36 @@ def completed_reading():
     return render_template('read_complete.html')
 
 
+@app.route('/add_complete/<book_id>', methods=["POST", "GET"])
+def add_completed_book(book_id):
+    """Add book to database completed category if not previously added"""
+    book_in_db = Book.query.filter_by(book_id=f"{book_id}").first()
+    if not book_in_db:
+        response = requests.get(f"https://www.googleapis.com/books/v1/volumes/{book_id}")
+        response.raise_for_status()
+        book_data = response.json()
+
+        book_author = book_data['volumeInfo']['authors']  # This is a list that has to be converted into a string before
+        # adding to db
+
+        new_book = Book()
+        new_book.book_id = book_id
+        new_book.book_title = book_data['volumeInfo']['title']
+        new_book.book_author = ', '.join([str(item) for item in book_author])  # Convert author list to string
+        new_book.image_url = book_data['volumeInfo']['imageLinks']['thumbnail']
+        new_book.publish_date = book_data['volumeInfo']['publishedDate']
+        new_book.category = "Completed"
+        db.session.add(new_book)
+        db.session.commit()
+        return redirect(url_for('completed_reading'))
+    elif book_in_db.category != "Completed":
+        book_in_db.category = "Completed"
+        db.session.commit()
+        return redirect(url_for('completed_reading'))
+    else:
+        return redirect(url_for('completed_reading'))
+
+
 @app.route('/future')
 def later_reading():
     """Retrieves books to be read later by user"""
