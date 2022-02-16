@@ -172,7 +172,6 @@ def completed_reading():
 def add_completed_book(book_id):
     """Add book to database completed category if not previously added"""
     book_in_db = Book.query.filter_by(book_id=f"{book_id}").first()
-    print(book_id)
     if not book_in_db:
         response = requests.get(f"https://www.googleapis.com/books/v1/volumes/{book_id}")
         response.raise_for_status()
