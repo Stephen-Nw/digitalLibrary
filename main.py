@@ -162,7 +162,8 @@ def add_in_progress(book_id):
 @app.route('/complete')
 def completed_reading():
     """Retrieves books that have been read by user"""
-    return render_template('read_complete.html')
+    all_books = Book.query.filter_by(category="Completed").all()
+    return render_template('read_complete.html', books=all_books)
 
 
 @app.route('/add_complete/<book_id>', methods=["POST", "GET"])
