@@ -62,7 +62,7 @@ def login_user():
             flash("Wrong password", category='error')
             return redirect(url_for('login_user'))
         else:
-            return redirect(url_for('completed_reading'))
+            return redirect(url_for('in_progress'))
     return render_template('login.html', form=form)
 
 
