@@ -1,3 +1,4 @@
+import jinja2.exceptions
 from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -106,6 +107,7 @@ def find_book():
         response = requests.get("https://www.googleapis.com/books/v1/volumes", params=parameters)
         response.raise_for_status()
         book_data = response.json()
+        print(book_data)
         try:
             book_list = book_data['items']
         except TypeError:
@@ -208,10 +210,15 @@ def later_reading():
     return render_template('read_later.html')
 
 
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('error.html'), 500
+
+
 
 
 
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

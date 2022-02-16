@@ -12,11 +12,13 @@
 </li>
 {% endblock %}
 
+
+
 {% block card %}
     {% for book in books %}
     <div class="card h-100">
-        <img class="card-img-top" src="{{ book['volumeInfo']['imageLinks']['smallThumbnail'] }}" alt="..."/>
-        <div class="card-body p-1">
+        <img class="card-img-top" src="{{ book['volumeInfo']['imageLinks']['smallThumbnail'] ) }}" alt="No image Found"/>
+         <div class="card-body p-1">
             <div class="text-center">
                 <h5 class="fw-bolder">{{ book['volumeInfo']['title'] }}</h5>
                 {{ book['volumeInfo']['authors'] }}<br>
