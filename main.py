@@ -146,7 +146,7 @@ def add_in_progress(book_id):
         new_book.book_title = book_data['volumeInfo']['title']
         new_book.book_author = ', '.join([str(item) for item in book_author])  # Convert author list to string
         new_book.image_url = book_data['volumeInfo']['imageLinks']['thumbnail']
-        new_book.publish_date = book_data['volumeInfo']['publishedDate']
+        # new_book.publish_date = book_data['volumeInfo']['publishedDate']
         new_book.category = "In Progress"
         db.session.add(new_book)
         db.session.commit()
@@ -170,6 +170,7 @@ def completed_reading():
 def add_completed_book(book_id):
     """Add book to database completed category if not previously added"""
     book_in_db = Book.query.filter_by(book_id=f"{book_id}").first()
+    print(book_id)
     if not book_in_db:
         response = requests.get(f"https://www.googleapis.com/books/v1/volumes/{book_id}")
         response.raise_for_status()
@@ -183,7 +184,7 @@ def add_completed_book(book_id):
         new_book.book_title = book_data['volumeInfo']['title']
         new_book.book_author = ', '.join([str(item) for item in book_author])  # Convert author list to string
         new_book.image_url = book_data['volumeInfo']['imageLinks']['thumbnail']
-        new_book.publish_date = book_data['volumeInfo']['publishedDate']
+        # new_book.publish_date = book_data['volumeInfo']['publishedDate']
         new_book.category = "Completed"
         db.session.add(new_book)
         db.session.commit()
