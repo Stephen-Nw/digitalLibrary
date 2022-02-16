@@ -146,7 +146,7 @@ def add_in_progress(book_id):
         new_book.book_title = book_data['volumeInfo']['title']
         new_book.book_author = ', '.join([str(item) for item in book_author])  # Convert author list to string
         new_book.image_url = book_data['volumeInfo']['imageLinks']['thumbnail']
-        # new_book.publish_date = book_data['volumeInfo']['publishedDate']
+        new_book.publish_date = book_data['volumeInfo']['publishedDate']
         new_book.category = "In Progress"
         db.session.add(new_book)
         db.session.commit()
@@ -184,7 +184,12 @@ def add_completed_book(book_id):
         new_book.book_title = book_data['volumeInfo']['title']
         new_book.book_author = ', '.join([str(item) for item in book_author])  # Convert author list to string
         new_book.image_url = book_data['volumeInfo']['imageLinks']['thumbnail']
-        # new_book.publish_date = book_data['volumeInfo']['publishedDate']
+        try:
+            new_book.publish_date = book_data['volumeInfo']['publishedDate']
+        except KeyError:
+            new_book.publish_date = " "
+        else:
+            new_book.publish_date = book_data['volumeInfo']['publishedDate']
         new_book.category = "Completed"
         db.session.add(new_book)
         db.session.commit()
