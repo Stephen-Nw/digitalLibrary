@@ -106,7 +106,6 @@ def find_book():
         response = requests.get("https://www.googleapis.com/books/v1/volumes", params=parameters)
         response.raise_for_status()
         book_data = response.json()
-        print(book_data)
         try:
             book_list = book_data['items']
         except TypeError:
