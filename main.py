@@ -206,7 +206,8 @@ def add_completed_book(book_id):
 @app.route('/future')
 def later_reading():
     """Retrieves books to be read later by user"""
-    return render_template('read_later.html')
+    all_books = Book.query.filter_by(category="Read later").all()
+    return render_template('read_later.html', books=all_books)
 
 
 @app.route('/add_future/<book_id>', methods=["POST", "GET"])
