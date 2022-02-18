@@ -3,7 +3,7 @@ import jinja2.exceptions
 from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, LoginManager, login_user, current_user
+from flask_login import UserMixin, LoginManager, login_user, current_user, logout_user
 from forms import LoginForm, RegisterForm
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 import requests
@@ -78,7 +78,8 @@ def user_login():
 
 
 @app.route('/logout')
-def logout_user():
+def user_logout():
+    logout_user()
     return render_template('index.html')
 
 
