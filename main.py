@@ -27,6 +27,7 @@ login_manager.init_app(app)
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 # CREATE DATABASES
 class User(UserMixin, db.Model):
     __tablename__ = "users_table"
@@ -86,6 +87,7 @@ def user_logout():
 
 @app.route('/register', methods=["POST", "GET"])
 def register_user():
+    """Create new user account"""
     form = RegisterForm()
     if form.validate_on_submit():
         new_user = User()
@@ -108,6 +110,7 @@ def register_user():
 @app.route('/book', methods=["POST", "GET"])
 @login_required
 def find_book():
+    """Search for books matching user's search parameters"""
     data = request.form
     if request.method == "POST":
         title = data['book_needed']
@@ -266,6 +269,5 @@ def page_not_found(e):
     return render_template('error.html'), 500
 
 
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
