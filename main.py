@@ -2,7 +2,7 @@ import jinja2.exceptions
 from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, LoginManager
+from flask_login import UserMixin, LoginManager, login_user
 from forms import LoginForm, RegisterForm
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 import requests
@@ -70,6 +70,7 @@ def login_user():
             flash("Wrong password", category='error')
             return redirect(url_for('login_user'))
         else:
+            login_user(user)
             return redirect(url_for('in_progress'))
     return render_template('login.html', form=form)
 
