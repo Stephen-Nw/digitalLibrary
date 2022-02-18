@@ -3,7 +3,7 @@ import jinja2.exceptions
 from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, LoginManager, login_user, current_user, logout_user
+from flask_login import UserMixin, LoginManager, login_user, current_user, logout_user, login_required
 from forms import LoginForm, RegisterForm
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 import requests
@@ -78,6 +78,7 @@ def user_login():
 
 
 @app.route('/logout')
+@login_required
 def user_logout():
     logout_user()
     return render_template('index.html')
@@ -105,6 +106,7 @@ def register_user():
 
 
 @app.route('/book', methods=["POST", "GET"])
+@login_required
 def find_book():
     data = request.form
     if request.method == "POST":
@@ -132,6 +134,7 @@ def find_book():
 
 
 @app.route('/reading', methods=["POST", "GET"])
+@login_required
 def in_progress():
     """Retrieves books currently being read by user"""
     all_books = Book.query.filter_by(category="In Progress").all()
@@ -173,6 +176,7 @@ def add_in_progress(book_id):
 
 
 @app.route('/complete')
+@login_required
 def completed_reading():
     """Retrieves books that have been read by user"""
     all_books = Book.query.filter_by(category="Completed").all()
@@ -215,6 +219,7 @@ def add_completed_book(book_id):
 
 
 @app.route('/future')
+@login_required
 def later_reading():
     """Retrieves books to be read later by user"""
     all_books = Book.query.filter_by(category="Read later").all()
@@ -256,17 +261,9 @@ def add_read_later(book_id):
         return redirect(url_for('later_reading'))
 
 
-
-
-
-
 @app.errorhandler(500)
 def page_not_found(e):
     return render_template('error.html'), 500
-
-
-
-
 
 
 
