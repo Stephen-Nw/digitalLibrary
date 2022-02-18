@@ -2,7 +2,7 @@ import jinja2.exceptions
 from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
+from flask_login import UserMixin, LoginManager
 from forms import LoginForm, RegisterForm
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 import requests
@@ -17,6 +17,9 @@ bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///books-tracker.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 # CREATE DATABASES
@@ -260,4 +263,4 @@ def page_not_found(e):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
