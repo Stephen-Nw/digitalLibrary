@@ -1,3 +1,4 @@
+import flask
 import jinja2.exceptions
 from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 from flask_bootstrap import Bootstrap
@@ -56,7 +57,7 @@ def home():
 
 
 @app.route('/login', methods=["POST", "GET"])
-def login_user():
+def user_login():
     form = LoginForm()
     if form.validate_on_submit():
         email = form.email.data
@@ -71,6 +72,7 @@ def login_user():
             return redirect(url_for('login_user'))
         else:
             login_user(user)
+            flash("Logged in successfully", category='success')
             return redirect(url_for('in_progress'))
     return render_template('login.html', form=form)
 
