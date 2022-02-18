@@ -66,10 +66,10 @@ def user_login():
 
         if not user:
             flash("User does not exist", category='error')
-            return redirect(url_for('login_user'))
+            return redirect(url_for('user_login'))
         elif not check_password_hash(user.password, password):
             flash("Wrong password", category='error')
-            return redirect(url_for('login_user'))
+            return redirect(url_for('user_login'))
         else:
             login_user(user)
             flash("Logged in successfully", category='success')
