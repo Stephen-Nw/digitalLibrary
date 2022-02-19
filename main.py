@@ -1,11 +1,10 @@
-import flask
-import jinja2.exceptions
 from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, current_user, logout_user, login_required
 from forms import LoginForm, RegisterForm
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
+from sqlalchemy.orm import relationship
 import requests
 import os
 
@@ -37,6 +36,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(250), unique=True)
     password = db.Column(db.String(250))
 
+    book_list = relationship('Book', back_populates="reader")
+
 
 class Book(db.Model):
     __tablename__ = "books_table"
@@ -47,6 +48,9 @@ class Book(db.Model):
     image_url = db.Column(db.String(350))
     publish_date = db.Column(db.String(250))
     category = db.Column(db.String(250), nullable=False)
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users_table.id"))
+    reader = relationship('User', back_populates="book_list")
 
 
 db.create_all()
