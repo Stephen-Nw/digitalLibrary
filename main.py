@@ -146,7 +146,6 @@ def find_book():
 
 
 @app.route('/reading', methods=["POST", "GET"])
-@login_required
 def in_progress():
     """Retrieves books currently being read by user"""
     all_books = Book.query.filter_by(category="In Progress").all()
