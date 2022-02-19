@@ -183,6 +183,25 @@ def add_in_progress(book_id):
         book_in_db.category = "In Progress"
         db.session.commit()
         return redirect(url_for('in_progress'))
+    elif book_in_db.user_id != current_user.id:  # add book to db if already in db under another user
+        response = requests.get(f"https://www.googleapis.com/books/v1/volumes/{book_id}")
+        response.raise_for_status()
+        book_data = response.json()
+
+        book_author = book_data['volumeInfo']['authors']  # This is a list that has to be converted into a string before
+        # adding to db
+
+        new_book = Book()
+        new_book.book_id = book_id
+        new_book.book_title = book_data['volumeInfo']['title']
+        new_book.book_author = ', '.join([str(item) for item in book_author])  # Convert author list to string
+        new_book.image_url = book_data['volumeInfo']['imageLinks']['thumbnail']
+        new_book.publish_date = book_data['volumeInfo']['publishedDate']
+        new_book.category = "In Progress"
+        new_book.user_id = current_user.id
+        db.session.add(new_book)
+        db.session.commit()
+        return redirect(url_for('in_progress'))
     else:
         return redirect(url_for('in_progress'))
 
