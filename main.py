@@ -1,3 +1,4 @@
+import sqlalchemy.exc
 from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -35,7 +36,7 @@ class User(UserMixin, db.Model):
     last = db.Column(db.String(250))
     email = db.Column(db.String(250), unique=True)
     password = db.Column(db.String(250))
-
+    
     book_list = relationship('Book', back_populates="reader")
 
 
@@ -94,8 +95,10 @@ def register_user():
     form = RegisterForm()
     if form.validate_on_submit():
         new_user = User()
+        print("Check 1")
         if form.password.data == form.repeatPassword.data:
             new_user.password = generate_password_hash(form.password.data, rounds=12).decode('utf-8')
+            print("Check 2")
         else:
             flash("Passwords do not match!!", category='error')
             return redirect(url_for('register_user'))
@@ -103,9 +106,18 @@ def register_user():
         new_user.last = form.lastName.data
         new_user.email = form.email.data
 
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('in_progress'))
+        try:
+            print("Check 3")
+            db.session.add(new_user)
+            db.session.commit()
+            print("Check 4")
+        except sqlalchemy.exc.IntegrityError:
+            print("Check 5")
+            flash("That account already exists. Log in instead")
+            return redirect(url_for('user_login'))
+        else:
+            print("Check 6")
+            return redirect(url_for('in_progress'))
 
     return render_template('register.html', form=form)
 
