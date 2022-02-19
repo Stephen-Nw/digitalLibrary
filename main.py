@@ -73,7 +73,6 @@ def user_login():
             return redirect(url_for('user_login'))
         else:
             login_user(user)
-            flash("Logged in successfully", category='success')
             return redirect(url_for('in_progress'))
     return render_template('login.html', form=form)
 
