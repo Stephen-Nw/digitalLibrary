@@ -14,6 +14,7 @@
 
 {% block card %}
 {% for book in books %}
+{% if book.user_id == current_user.id %}
 <div class="col mb-5">
     <div class="card h-100">
         <img class="card-img-top" src="{{ book.image_url }}" alt="..."/>
@@ -34,5 +35,6 @@
 
     </div>
 </div>
+{% endif %}
 {% endfor %}
 {% endblock %}
