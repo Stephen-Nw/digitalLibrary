@@ -29,17 +29,6 @@ def load_user(user_id):
 
 
 # CREATE DATABASES
-class User(UserMixin, db.Model):
-    __tablename__ = "users_table"
-    id = db.Column(db.Integer, primary_key=True)
-    first = db.Column(db.String(250))
-    last = db.Column(db.String(250))
-    email = db.Column(db.String(250), unique=True)
-    password = db.Column(db.String(250))
-    
-    book_list = relationship('Book', back_populates="reader")
-
-
 class Book(db.Model):
     __tablename__ = "books_table"
     id = db.Column(db.Integer, primary_key=True)
@@ -52,6 +41,17 @@ class Book(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey("users_table.id"))
     reader = relationship('User', back_populates="book_list")
+
+
+class User(UserMixin, db.Model):
+    __tablename__ = "users_table"
+    id = db.Column(db.Integer, primary_key=True)
+    first = db.Column(db.String(250))
+    last = db.Column(db.String(250))
+    email = db.Column(db.String(250), unique=True)
+    password = db.Column(db.String(250))
+
+    book_list = relationship('Book', back_populates="reader")
 
 
 db.create_all()
@@ -175,6 +175,7 @@ def add_in_progress(book_id):
         new_book.image_url = book_data['volumeInfo']['imageLinks']['thumbnail']
         new_book.publish_date = book_data['volumeInfo']['publishedDate']
         new_book.category = "In Progress"
+        new_book.user_id = current_user.id
         db.session.add(new_book)
         db.session.commit()
         return redirect(url_for('in_progress'))
