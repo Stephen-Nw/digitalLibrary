@@ -111,7 +111,7 @@ def register_user():
             flash("That account already exists. Log in instead")
             return redirect(url_for('user_login'))
         else:
-            return redirect(url_for('in_progress'))
+            return redirect(url_for('user_login'))
 
     return render_template('register.html', form=form)
 
