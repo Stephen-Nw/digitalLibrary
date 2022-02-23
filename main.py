@@ -28,7 +28,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-# CREATE DATABASES
+# CREATE TABLES
 class Book(db.Model):
     __tablename__ = "books_table"
     id = db.Column(db.Integer, primary_key=True)
@@ -57,13 +57,16 @@ class User(UserMixin, db.Model):
 db.create_all()
 
 
+# CREATE ROUTES
 @app.route('/')
 def home():
+    """Route to cover page"""
     return render_template('index.html')
 
 
 @app.route('/login', methods=["POST", "GET"])
 def user_login():
+    """Log user in"""
     form = LoginForm()
     if form.validate_on_submit():
         email = form.email.data
@@ -85,6 +88,7 @@ def user_login():
 @app.route('/logout')
 @login_required
 def user_logout():
+    """Log user out"""
     logout_user()
     return render_template('index.html')
 
@@ -211,7 +215,7 @@ def add_in_progress(book_id):
 def completed_reading():
     """Retrieves books that have been read by user"""
     all_books = Book.query.filter_by(category="Completed").all()
-    return render_template('read_complete.html', books=all_books)
+    return render_template('read_complete.html', books=all_books, current_user=current_user)
 
 
 @app.route('/add_complete/<book_id>', methods=["POST", "GET"])
@@ -254,7 +258,7 @@ def add_completed_book(book_id):
 def later_reading():
     """Retrieves books to be read later by user"""
     all_books = Book.query.filter_by(category="Read later").all()
-    return render_template('read_later.html', books=all_books)
+    return render_template('read_later.html', books=all_books, current_user=current_user)
 
 
 @app.route('/add_future/<book_id>', methods=["POST", "GET"])
@@ -294,6 +298,7 @@ def add_read_later(book_id):
 
 @app.errorhandler(500)
 def page_not_found(e):
+    """Error page"""
     return render_template('error.html'), 500
 
 
